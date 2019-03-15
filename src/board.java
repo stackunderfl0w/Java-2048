@@ -1,7 +1,9 @@
-import java.lang.invoke.SwitchPoint;
+//import needed utilities
 import java.util.Random;
 import java.util.Arrays;
+//declare new class
 public class board {
+    //declare needed variables
     private int size_x;
     private int size_y;
     Random rand = new Random();
@@ -11,7 +13,9 @@ public class board {
     private int[][][] previous= new int[undo_depth][][];
     private int[] previous_score=new int[undo_depth];
     public boolean four;
+    //create new board object
     public board(int x,int y){
+        //create new board with size x,y and add 2 tiles
         board = new int[x][y];
         size_x=x;
         size_y=y;
@@ -19,19 +23,25 @@ public class board {
         new_tile();
 
     }
+    //declare move meathod
     public void move(String next){
+        //make copy of 2d array
         int[][] old_board= new int[board.length][board[0].length];
         int old_score=score;
         for(int x=0; x<board.length;x++){
             old_board[x]= Arrays.copyOf(board[x],board[x].length);
         }
-
+        //determine move direction then move
         switch (next){
             case "left":left(); break;
             case "right":right(); break;
             case "up":up(); break;
             case "down":down(); break;
         }
+        //check if anything happened
+        //and if it did update the screen and add a new tile
+        //and if nothing changed check if an moves are possible
+        //if not, end the game
         if(!Arrays.deepEquals(board, old_board)){
             for(int x=previous.length-1;x>0;x--){
                 previous[x]=previous[x-1];
@@ -51,6 +61,7 @@ public class board {
             get_available(board);
         }
     }
+    //undo last move(upto undo_depth moves)
     public void undo(){
         for(int x=0; x<board.length;x++){
             board[x]= Arrays.copyOf(previous[0][x],board[x].length);
@@ -61,6 +72,7 @@ public class board {
             previous_score[x]=previous_score[x+1];
         }
     }
+    //print board to console(debugging)
     public void print_board(){
         for (int x=0; x<board.length;x++){
             System.out.print("|");
@@ -72,6 +84,7 @@ public class board {
         System.out.println();
 
     }
+    //add a new tile to board
     private void new_tile(){
         int next=2;
         int[]cord= get_available(board);;
@@ -101,6 +114,7 @@ public class board {
             }
         }
     }
+    //move all tiles left
     public void left(){
         //move all tiles to edge
         for (int x=0;x<board.length;x++){
@@ -153,10 +167,12 @@ public class board {
         left();
         board=rotate(board);
     }
+    //print game over(todo add graphics gameover screen)
     private void game_over(){
         System.out.println("Game over");
         System.exit(0);
     }
+    //rotate the board 90 degrees
     private int[][] rotate(int[][] old_board){
         int[][] new_board=new int[board[0].length][board.length];
         for(int x=0; x<old_board[0].length; x++){
