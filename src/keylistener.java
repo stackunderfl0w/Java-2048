@@ -8,14 +8,14 @@ public class keylistener implements KeyListener{
         try
         {
             //System.out.println(KeyEvent.getKeyText(e.getKeyCode()));
-            switch (KeyEvent.getKeyText(e.getKeyCode())){
-                case "↑":Main.move("up"); break;
-                case "←":Main.move("left"); break;
-                case "↓":Main.move("down"); break;
-                case "→":Main.move("right"); break;
-                case "F":System.exit(0);break;
-                case "P":Main.move("undo");break;
-                case "⎋":Main.reset();break;
+            switch (e.getKeyCode()){
+                case KeyEvent.VK_UP:Main.move("up"); break;
+                case KeyEvent.VK_LEFT:Main.move("left"); break;
+                case KeyEvent.VK_DOWN:Main.move("down"); break;
+                case KeyEvent.VK_RIGHT:Main.move("right"); break;
+                case KeyEvent.VK_F:System.exit(0);break;
+                case KeyEvent.VK_BACK_SPACE:Main.move("undo");break;
+                case KeyEvent.VK_R:Main.reset();break;
             }
 
 
